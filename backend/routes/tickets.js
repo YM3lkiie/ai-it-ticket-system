@@ -28,4 +28,85 @@ router.post("/", (req, res) => {
     );
 });
 
+// GET ALL TICKETS SO THAT SYSTEM CAN RETRIEVE ALL TICKETS FROM MYSQL
+router.get("/", (req, res) => {
+    const query = "SELECT * FROM tickets";
+
+    db.query(query, (error, results) => {
+        if(error){
+            console.error(error);
+            res.status(500).send("Error retrieving tickets");
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// GET A SINGLE TICKET BY ITS ID
+router.get("/:id", (req, res) => {
+    const ticketId = req.params.id;
+    
+    const query = "SELECT * FROM tickets WHERE id = ?";
+
+    db.query(query, [ticketId], (error, results) => {
+        if(error) {
+            console.error(error);
+            res.status(500).send("Error retrieving ticket");
+            return;
+        }
+
+        if(results.length === 0) {
+            res.status(400).json({ message: "Ticket not found" });
+            return;
+        }
+
+        res.json(results[0]);
+    });
+});
+
+// UPDATING STATUS OF TICKET
+router.patch("/:id/status", (req, res) => {
+    const ticketId = req.params.id;
+    const { status } = req.body;
+
+    const query = "UPDATE tickets SET status = ? WHERE id = ?";
+
+    db.query(query, [status, ticketId], (error, result) => {
+        if(error) {
+            console.error(error);
+            res.status(500).json({ message: "Ticket not found" });
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).json({ message: "Ticket not found" });
+            return;
+        }
+        res.json({ message: "Ticket status updated successfully" });
+    });
+});
+
+// ASSIGN TECHNICIAN TO TICKET
+router.patch("/:id/assign", (req, res) => {
+    const ticketId = req.params.id;
+    const { assigned_to } = req.body;
+
+    const query = "UPDATE tickets SET assigned_to = ? WHERE id = ?";
+
+    db.query(query, [assigned_to, ticketId], (error, result) => {
+        if(error) {
+            console.error(error);
+            res.status(500).send("Error assigning ticket");
+            return;
+        }
+
+        if(result.affectedRows ===0) {
+            res.status(404).json({ message: "Ticket not found" });
+            return;
+        }
+
+        res.json({ message: "Ticket assisgned successfully "});
+    });
+});
+
 module.exports = router;
