@@ -28,6 +28,7 @@ router.post("/", (req, res) => {
     );
 });
 
+/*
 // GET ALL TICKETS SO THAT SYSTEM CAN RETRIEVE ALL TICKETS FROM MYSQL
 router.get("/", (req, res) => {
     const query = "SELECT * FROM tickets";
@@ -38,6 +39,38 @@ router.get("/", (req, res) => {
             res.status(500).send("Error retrieving tickets");
             return;
         }
+        res.json(results);
+    });
+});
+*/
+
+// UPDATE GET ALL TICKETS TO ALSO INCLUDE FILTERS
+router.get("/", (req, res) => {
+    let query = "SELECT * FROM tickets WHERE 1=1";
+    let params = [];
+
+    if(req.query.status) {
+        query += " AND status = ?";
+        params.push(req.query.status);
+    }
+
+    if(req.query.priority) {
+        query += " AND priority = ?";
+        params.push(req.query.priority);
+    }
+
+    if(req.query.assigned_to) {
+        query += " AND assigned_to = ?";
+        params.push(req.query.assigned_to);
+    }
+
+    db.query(query, params, (error, results) => {
+        if(error) {
+            console.error(error);
+            res.status(500).send("Error retrieving tickets");
+            return;
+        }
+
         res.json(results);
     });
 });
