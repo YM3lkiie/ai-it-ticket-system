@@ -1,12 +1,13 @@
 // DATABASE CONNECTION FILE
 const { connect } = require("mssql");
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Mysql@123",
-    databse: "ai_ticket_system"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    databse: process.env.DB_NAME
 });
 
 connection.connect((error) => {
