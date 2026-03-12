@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/database");
 
+const classifyTicket = require("../services/ticketClassifier");
+
 // CREATE TICKET
 router.post("/", (req, res) => {
-    const { title, description, category, priority, created_by } = req.body;
+
+    const { title, description, created_by } = req.body;
+    const aiResult = classifyTicket(title + " " + description);
 
     const query = `
         INSERT INTO tickets (title, description, category, priority, created_by)
@@ -12,7 +16,7 @@ router.post("/", (req, res) => {
     `;
 
     db.query(
-        query, [title, description, category, priority, created_by],
+        query, [title, description, aiResult.category, aiResult.priority, created_by],
         (error, result) => {
             if(error) {
                 console.error(error);
@@ -20,9 +24,11 @@ router.post("/", (req, res) => {
                 return;
             }
 
-            res.status(201).json({
-                message: "Ticket created successfully",
-                ticketId: result.inserId
+            res.json({
+                message: "Ticket created",
+                ticketId: result.insertId,
+                category: aiResult.category,
+                priority: aiResult.priority
             });
         }
     );
