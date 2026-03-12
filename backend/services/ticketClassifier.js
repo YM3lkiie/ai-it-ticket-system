@@ -4,7 +4,7 @@ function classifyTicket(text) {
 
     let category = "General";
     let priority = "Low";
-
+    
     if(message.includes("wifi") || message.includes("network") || message.includes("internet")) {
         category = "Network";
         priority = "High";
@@ -12,7 +12,7 @@ function classifyTicket(text) {
 
     if(message.includes("email") || message.includes("outlook") || message.includes("mail")) {
         category = "Email";
-        priority = "Medium";
+        priority = "Medium";  
     }
 
     if(message.includes("password") || message.includes("login") || message.includes("account")) {
