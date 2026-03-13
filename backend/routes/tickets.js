@@ -38,22 +38,6 @@ router.post("/", (req, res) => {
     );
 });
 
-
-// GET ALL TICKETS SO THAT SYSTEM CAN RETRIEVE ALL TICKETS FROM MYSQL
-router.get("/", (req, res) => {
-    const query = "SELECT * FROM tickets";
-
-    db.query(query, (error, results) => {
-        if(error){
-            console.error(error);
-            res.status(500).send("Error retrieving tickets");
-            return;
-        }
-        res.json(results);
-    });
-});
-
-
 // UPDATE GET ALL TICKETS TO ALSO INCLUDE FILTERS
 router.get("/", (req, res) => {
     let query = "SELECT * FROM tickets WHERE 1=1";
