@@ -25,6 +25,11 @@ function classifyTicket(text) {
         priority = "Low";
     }
 
+    if(message.includes("access")) {
+        category = "Request for Access";
+        priority = "Medium"
+    }
+
     return{
         category,
         priority

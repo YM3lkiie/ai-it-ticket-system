@@ -8,7 +8,19 @@
 </head>
 <body>
     <h1>AI IT TICKET DASHBOARD</h1>
-    <button onclick="loadTickets()">Load Tickets</button>
+    <!-- <button onclick="loadTickets()">Load Tickets</button> -->
+
+    <h2>CREATE NEW TICKET</h2>
+    <form id="ticketForm">
+        <input type="text" id="title" placeholder="Ticket Title" required>
+        <br><br>
+        <textarea id="description" placeholder="Describe the issue" required></textarea>
+        <br><br>
+        <input type="text" id="created_by" placeholder="Your Name" required>
+        <br><br>
+        <button type="submit">Submit Ticket</button>
+    </form>
+    
     <table id = "ticketTable">
         <thead>
             <tr>

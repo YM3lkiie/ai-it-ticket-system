@@ -4,7 +4,7 @@ body {
 }
 
 table {
-    border-collapse: collapse;
+border-collapse: collapse;
     width: 80%;
 }
 
@@ -16,4 +16,29 @@ th, td {
 th {
     background-color: #333;
     color: white;
+}
+
+form {
+    background-color: lightgray;
+    margin-bottom: 30px;
+}
+
+input, textarea {
+    width: 300px;
+    padding: 8px;
+}
+
+button {
+    width: 200px;
+    padding: 10px 15px;
+    background: #2b7cff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+button:hover {
+    background: green;
+    font-weight: bolder;
 }

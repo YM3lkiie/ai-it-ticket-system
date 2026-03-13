@@ -38,10 +38,14 @@ function suggestFix(text) {
         ];
     }
 
-    if (suggestions.length === 0) {
+    if(message.includes("access")) {
         suggestions = [
-            "Restart the device",
-            "Check network connectivity",
+            "Please contact your administrator to grant you access"
+        ]
+    }
+
+    if (suggestions.length === 0) {
+        suggestions = [            
             "Contact IT support"
         ];
     }
